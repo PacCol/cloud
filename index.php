@@ -40,18 +40,41 @@
   <p><a class="button button2" href="uploader.html">Upload a new file</a></p>
   <br>
 
-  <table style="width:100%">
+  <table style="width:50%">
   <tr>
     <th>File</th>
     <th>Download</th>
-    <th>Delete</th>
   </tr>
 
-<?php
+  <?php
+  $dir = "uploads/";
+  if (is_dir($dir)){
+    if ($dh = opendir($dir)){
+      while (($file = readdir($dh)) !== false){
+        if ($file != "." && $file != ".."){
+          echo "<tr>";
+          echo "<th>".$file."</th>";
+          echo "<th>".'<a href="uploads/'.$file.'" download>
+<button>Download</button>
+</a>'."</th>";
+          echo "<tr>";
+        }
+      }
+      closedir($dh);
+    }
+  }
+  ?>
 
+</table>
 
+<br>
+<br>
+<br>
 
-?>
+<form action="delete.php" method="post">
+Enter the name of the file that you want to delete : <input type="text" name="file"><br>
+<input type="submit">
+</form>
 
 </body>
 </html>
